@@ -1,0 +1,50 @@
+import random
+import string
+
+def parol_generator():
+    print("=" * 45)
+    print("       KUCHLI PAROLLAR GENERATORI        ")
+    print("=" * 45)
+    
+    # Foydalanuvchidan parol uzunligini so'rash
+    try:
+        uzunlik = int(input("Parol nechta belgidan iborat bo'lsin? (Masalan: 12): "))
+        if uzunlik < 4:
+            print("Xavfsizlik uchun parol kamida 4 ta belgidan iborat bo'lishi kerak!")
+            return
+    except ValueError:
+        print("Iltimos, faqat musbat raqam kiriting!")
+        return
+
+    # Parol ichida bo'ladigan belgilar kombinatsiyasi
+    kichik_harflar = string.ascii_lowercase
+    katta_harflar = string.ascii_uppercase
+    raqamlar = string.digits
+    belgilar = string.punctuation  # !, @, #, $, %, etc.
+
+    # Barcha belgilarni bitta umumiy hovuzga yig'amiz
+    barcha_belgilar = kichik_harflar + katta_harflar + raqamlar + belgilar
+
+    # Kamida 1 ta harf, raqam va belgi bo'lishini ta'minlash
+    parol = [
+        random.choice(kichik_harflar),
+        random.choice(katta_harflar),
+        random.choice(raqamlar),
+        random.choice(belgilar)
+    ]
+
+    # Qolgan qismini tasodifiy belgilar bilan to'ldiramiz
+    parol += [random.choice(barcha_belgilar) for _ in range(uzunlik - 4)]
+
+    # Belgilar tartibini aralashtirib tashlaymiz (yanada xavfsiz bo'lishi uchun)
+    random.shuffle(parol)
+
+    # Ro'yxatni matn (string) ko'rinishiga o'tkazamiz
+    yakuniy_parol = "".join(parol)
+
+    print("\n" + "-" * 45)
+    print(f"Siz uchun xavfsiz parol yaratildi: \n👉 {yakuniy_parol} 👈")
+    print("-" * 45)
+
+if __name__ == "__main__":
+    parol_generator()
